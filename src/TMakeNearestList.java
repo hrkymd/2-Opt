@@ -8,8 +8,8 @@ public class TMakeNearestList {
 
     public static void main(String[] args) {
 
-//        String fileName = "src/ca4663.tsp";
-//        String dataName = "ca4663";
+        String fileName = "src/ca4663.tsp";
+        String dataName = "ca4663";
 
 //        String fileName = "src/ja9847.tsp";
 //        String dataName = "ja9847";
@@ -23,8 +23,8 @@ public class TMakeNearestList {
 //        String fileName = "src/ch71009.tsp";
 //        String dataName = "ch71009";
 
-        String fileName = "src/mona-lisa100K.tsp";
-        String dataName = "monalisa";
+//        String fileName = "src/mona-lisa100K.tsp";
+//        String dataName = "monalisa";
 
         TInstance cityData;
         int cityNum;
@@ -83,7 +83,8 @@ public class TMakeNearestList {
                 for(int j = 0; j < cityNum; j++){ //距離の計算
                     double xd = Math.abs(cityData.getCity(i).getFx() - cityData.getCity(j).getFx() );
                     double yd = Math.abs(cityData.getCity(i).getFy() - cityData.getCity(j).getFy() );
-                    double dij = Math.floor(Math.sqrt(xd * xd + yd * yd) + 0.5);
+//                    double dij = Math.floor(Math.sqrt(xd * xd + yd * yd) + 0.5);
+                    double dij = Math.sqrt(xd * xd + yd * yd);
                     if(i == j){
                         dij = Double.POSITIVE_INFINITY;
                     }

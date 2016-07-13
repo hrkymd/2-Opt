@@ -44,6 +44,9 @@ public class TInstance {
         if(fCityNum != instance.getfCityData().length){
             fCityNum = instance.getfCityData().length;
             fCityData = new TCity[fCityNum];
+            for(int i = 0; i < fCityNum ; i++){
+                fCityData[i] = new TCity();
+            }
         }
 
         for(int i = 0; i < fCityNum ; i++){

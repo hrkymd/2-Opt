@@ -9,8 +9,8 @@ public class TMakeReverseKList {
     public static void main(String[] args) {
 
 
-//        String fileName = "kNearlestListOfca4663.csv";
-//        String dataName = "ca4663";
+        String fileName = "kNearlestListOfca4663.csv";
+        String dataName = "ca4663";
 
 //        String fileName = "kNearlestListOfja9847.csv";
 //        String dataName = "ja9847";
@@ -24,8 +24,8 @@ public class TMakeReverseKList {
 //        String fileName = "kNearlestListOfch71009.csv";
 //        String dataName = "ch71009";
 
-        String fileName = "kNearlestListOfmonalisa.csv";
-        String dataName = "monalisa";
+//        String fileName = "kNearlestListOfmonalisa.csv";
+//        String dataName = "monalisa";
 
         int cityNum;
         int k = 50;
