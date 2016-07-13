@@ -9,21 +9,21 @@ public class T2Opt {
 
     public static void main(String[] args) throws Exception{
 
-        String fileName = "src/ca4663.tsp";
-        String kNearlestFileName = "kNearlestListOfca4663.csv";
-        String reverseListFileName = "reverseListOfca4663.csv";
-        String dataName = "ca4663";
-
+//        String fileName = "src/ca4663.tsp";
+//        String kNearlestFileName = "kNearlestListOfca4663.csv";
+//        String reverseListFileName = "reverseListOfca4663.csv";
+//        String dataName = "ca4663";
+//
 //        String fileName = "src/ja9847.tsp";
 //        String kNearlestFileName = "kNearlestListOfja9847.csv";
 //        String reverseListFileName = "reverseListOfja9847.csv";
 //        String dataName = "ja9847";
-
+//
 //        String fileName = "src/fi10639.tsp";
 //        String kNearlestFileName = "kNearlestListOffi10639.csv";
 //        String reverseListFileName = "reverseListOffi10639.csv";
 //        String dataName = "fi10639";
-
+//
 //        String fileName = "src/bm33708.tsp";
 //        String kNearlestFileName = "kNearlestListOfbm33708.csv";
 //        String reverseListFileName = "reverseListOfbm33708.csv";
@@ -34,11 +34,11 @@ public class T2Opt {
 //        String reverseListFileName = "reverseListOfch71009.csv";
 //        String dataName = "ch71009";
 
-//        String fileName = "src/mona-lisa100K.tsp";
-//        String kNearlestFileName = "kNearlestListOfmonalisa.csv";
-//        String reverseListFileName = "reverseListOfmonalisa.csv";
-//        String dataName = "monalisa";
-
+        String fileName = "src/mona-lisa100K.tsp";
+        String kNearlestFileName = "kNearlestListOfmonalisa.csv";
+        String reverseListFileName = "reverseListOfmonalisa.csv";
+        String dataName = "monalisa";
+//
         TInstance cityData; //都市データ
         int[][] kNearlestList; //k近傍リスト
         ArrayList<Integer>[] reverseList; //逆近傍リスト
@@ -157,169 +157,186 @@ public class T2Opt {
 //            System.out.println();
 //        }
 
-        TRoute route = new TRoute(cityData);
-        route.init();
-        System.out.println("init tourLength : " + route.getfTourLength());
+        long[] time = new long[11];
 
-        long start = System.currentTimeMillis(); //時間計測
+        for(int count = 0; count < 11; count++) {
+            TRoute route = new TRoute(cityData);
+            route.init();
+            System.out.println("init tourLength : " + route.getfTourLength());
 
-        System.out.println("positoid");
-        for(int i = 0; i < cityNum; i++){
-            System.out.print(route.getNumberOfCity(i) + " ");
-        }
+            int fNoOfCandidates = 0;
+            int[] fCandidates = new int[cityNum];
+            boolean[] fIsCandidate = new boolean[cityNum];
 
-        System.out.println();
-        System.out.println("idtoposi");
-        for(int i = 0; i < cityNum; i++){
-            System.out.print(route.getPositionOfCity(i) + " ");
-        }
+            for (int i = 0; i < cityNum; i++) {
+                fCandidates[i] = i;
+                fIsCandidate[i] = true;
+                fNoOfCandidates++;
+            }
 
-        ArrayList<Integer> cityListH = new ArrayList<>(cityNum);
-        for(int i = 0; i < cityNum; i++){
-            cityListH.add(i);
-        }
+            int positionOfv_a;
+            int v_a, v_b, v_c, v_d;
+            int i;
+            boolean jumpTo2;
+            //int count = 0;
 
-        int positionOfv_a;
-        int v_a, v_b, v_c, v_d;
-        int i;
-        boolean jumpTo2;
-        //int count = 0;
-        while (cityListH.size() > 0){ //ステップ2
-            positionOfv_a = random.nextInt(cityListH.size());
-            v_a = cityListH.get(positionOfv_a);
+            long start = System.currentTimeMillis(); //時間計測
 
-            i = 0;
-            //System.out.println();
-            //System.out.println("count" + count++);
+            while (fNoOfCandidates > 0) { //ステップ2
+                positionOfv_a = random.nextInt(fNoOfCandidates);
+                v_a = fCandidates[positionOfv_a];
 
-            jumpTo2 = false;
+                i = 0;
+                //System.out.println();
+                //System.out.println("count" + count++);
 
-            while(i < 2) {
+                jumpTo2 = false;
 
-                if (i == 0) {
-                    v_b = route.nextFromId(v_a);
-                } else {
-                    v_b = route.prevFromId(v_a);
-                }
+                while (i < 2) {
 
-                for (int j = 0; j < k; j++) { //ステップ4
-
-                    v_c = kNearlestList[v_a][j]; //4.a
-
-                    if ( - route.calcDistance(v_a, v_b) + route.calcDistance(v_a, v_c) >= 0.0) { //4.b
-                        //ステップ5へ
-                        break;
-                    }
-
-                    if (i == 0) { //4.c
-                        v_d = route.nextFromId(v_c);
+                    if (i == 0) {
+                        v_b = route.nextFromId(v_a);
                     } else {
-                        v_d = route.prevFromId(v_c);
+                        v_b = route.prevFromId(v_a);
                     }
 
-                    //4.d
-                    if ( - route.calcDistance(v_a, v_b) - route.calcDistance(v_c, v_d) + route.calcDistance(v_a, v_c) + route.calcDistance(v_b, v_d) < 0.0) {
-                        //System.out.println("swap");
-                        route.swapEdge(v_a, v_b, v_c, v_d);
+                    for (int j = 0; j < k; j++) { //ステップ4
 
-                        //vb, vc,vdのうち,Hに含まれていないものをHに追加
-                        if(!cityListH.contains(v_b)){
-                            cityListH.add(v_b);
-                        }
-                        if(!cityListH.contains(v_c)){
-                            cityListH.add(v_c);
-                        }
-                        if(!cityListH.contains(v_d)){
-                            cityListH.add(v_d);
+                        v_c = kNearlestList[v_a][j]; //4.a
+
+                        if (-route.calcDistance(v_a, v_b) + route.calcDistance(v_a, v_c) >= 0.0) { //4.b
+                            //ステップ5へ
+                            break;
                         }
 
-                        //va, vb, vc,vdをk近傍に持つ都市のうち,Hに含まれていないものをHに追加してステップ2へ
-                        int sizeOfAList = reverseList[v_a].size();
-                        int sizeOfBList = reverseList[v_b].size();
-                        int sizeOfCList = reverseList[v_c].size();
-                        int sizeOfDList = reverseList[v_d].size();
+                        if (i == 0) { //4.c
+                            v_d = route.nextFromId(v_c);
+                        } else {
+                            v_d = route.prevFromId(v_c);
+                        }
 
-                        if(sizeOfAList <= sizeOfBList && sizeOfAList <= sizeOfCList && sizeOfAList <= sizeOfDList){
-                            for(int l = 0; l < sizeOfAList; l++) {
-                                if (reverseList[v_b].contains(reverseList[v_a].get(l))){
-                                    if (reverseList[v_c].contains(reverseList[v_a].get(l))){
-                                        if (reverseList[v_d].contains(reverseList[v_a].get(l))) {
-                                            if (!cityListH.contains(reverseList[v_a].get(l))) {
-                                                cityListH.add(reverseList[v_a].get(l));
+                        //4.d
+                        if (-route.calcDistance(v_a, v_b) - route.calcDistance(v_c, v_d) + route.calcDistance(v_a, v_c) + route.calcDistance(v_b, v_d) < 0.0) {
+                            //System.out.println("swap");
+                            route.swapEdge(v_a, v_b, v_c, v_d);
+
+                            //vb, vc,vdのうち,Hに含まれていないものをHに追加
+                            if (!fIsCandidate[v_b]) {
+                                fIsCandidate[v_b] = true;
+                                fCandidates[fNoOfCandidates++] = v_b;
+                            }
+                            if (!fIsCandidate[v_c]) {
+                                fIsCandidate[v_c] = true;
+                                fCandidates[fNoOfCandidates++] = v_c;
+                            }
+                            if (!fIsCandidate[v_d]) {
+                                fIsCandidate[v_d] = true;
+                                fCandidates[fNoOfCandidates++] = v_d;
+                            }
+
+                            //va, vb, vc,vdをk近傍に持つ都市のうち,Hに含まれていないものをHに追加してステップ2へ
+                            int sizeOfAList = reverseList[v_a].size();
+                            int sizeOfBList = reverseList[v_b].size();
+                            int sizeOfCList = reverseList[v_c].size();
+                            int sizeOfDList = reverseList[v_d].size();
+
+                            if (sizeOfAList <= sizeOfBList && sizeOfAList <= sizeOfCList && sizeOfAList <= sizeOfDList) {
+                                for (int l = 0; l < sizeOfAList; l++) {
+                                    if (reverseList[v_b].contains(reverseList[v_a].get(l))) {
+                                        if (reverseList[v_c].contains(reverseList[v_a].get(l))) {
+                                            if (reverseList[v_d].contains(reverseList[v_a].get(l))) {
+                                                if (!fIsCandidate[l]) {
+                                                    fIsCandidate[l] = true;
+                                                    fCandidates[fNoOfCandidates++] = l;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            } else if (sizeOfBList <= sizeOfAList && sizeOfBList <= sizeOfCList && sizeOfBList <= sizeOfDList) {
+                                for (int l = 0; l < sizeOfBList; l++) {
+                                    if (reverseList[v_a].contains(reverseList[v_b].get(l))) {
+                                        if (reverseList[v_c].contains(reverseList[v_b].get(l))) {
+                                            if (reverseList[v_d].contains(reverseList[v_b].get(l))) {
+                                                if (!fIsCandidate[l]) {
+                                                    fIsCandidate[l] = true;
+                                                    fCandidates[fNoOfCandidates++] = l;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            } else if (sizeOfCList <= sizeOfAList && sizeOfCList <= sizeOfBList && sizeOfCList <= sizeOfDList) {
+                                for (int l = 0; l < sizeOfCList; l++) {
+                                    if (reverseList[v_a].contains(reverseList[v_c].get(l))) {
+                                        if (reverseList[v_b].contains(reverseList[v_c].get(l))) {
+                                            if (reverseList[v_d].contains(reverseList[v_c].get(l))) {
+                                                if (!fIsCandidate[l]) {
+                                                    fIsCandidate[l] = true;
+                                                    fCandidates[fNoOfCandidates++] = l;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                for (int l = 0; l < sizeOfDList; l++) {
+                                    if (reverseList[v_a].contains(reverseList[v_d].get(l))) {
+                                        if (reverseList[v_b].contains(reverseList[v_d].get(l))) {
+                                            if (reverseList[v_c].contains(reverseList[v_d].get(l))) {
+                                                if (!fIsCandidate[l]) {
+                                                    fIsCandidate[l] = true;
+                                                    fCandidates[fNoOfCandidates++] = l;
+                                                }
                                             }
                                         }
                                     }
                                 }
                             }
-                        }
-                        else if(sizeOfBList <= sizeOfAList && sizeOfBList <= sizeOfCList && sizeOfBList <= sizeOfDList){
-                            for(int l = 0; l < sizeOfBList; l++) {
-                                if (reverseList[v_a].contains(reverseList[v_b].get(l))){
-                                    if (reverseList[v_c].contains(reverseList[v_b].get(l))){
-                                        if (reverseList[v_d].contains(reverseList[v_b].get(l))) {
-                                            if (!cityListH.contains(reverseList[v_b].get(l))) {
-                                                cityListH.add(reverseList[v_b].get(l));
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        else if(sizeOfCList <= sizeOfAList && sizeOfCList <= sizeOfBList && sizeOfCList <= sizeOfDList){
-                            for(int l = 0; l < sizeOfCList; l++) {
-                                if (reverseList[v_a].contains(reverseList[v_c].get(l))){
-                                    if (reverseList[v_b].contains(reverseList[v_c].get(l))){
-                                        if (reverseList[v_d].contains(reverseList[v_c].get(l))) {
-                                            if (!cityListH.contains(reverseList[v_c].get(l))) {
-                                                cityListH.add(reverseList[v_c].get(l));
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }else{
-                            for(int l = 0; l < sizeOfDList; l++) {
-                                if (reverseList[v_a].contains(reverseList[v_d].get(l))){
-                                    if (reverseList[v_b].contains(reverseList[v_d].get(l))){
-                                        if (reverseList[v_c].contains(reverseList[v_d].get(l))) {
-                                            if (!cityListH.contains(reverseList[v_d].get(l))) {
-                                                cityListH.add(reverseList[v_d].get(l));
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
 
-                        jumpTo2 = true;
+                            jumpTo2 = true;
+                            break;
+
+                        } //end if 4.d
+                    }// end for(j)
+
+                    if (jumpTo2 == true) {
                         break;
+                    }
 
-                    } //end if 4.d
-                }// end for(j)
-
-                if(jumpTo2 == true){
-                        break;
-                }
-
-                i += 1; //ステップ5
-                if(i == 2){
-                    //System.out.println("remove Num : " + v_a);
-                    cityListH.remove(positionOfv_a);
+                    i += 1; //ステップ5
+                    if (i == 2) {
+                        //System.out.println("remove Num : " + v_a);
+                        fIsCandidate[v_a] = false;
+                        fNoOfCandidates--;
+                        fCandidates[positionOfv_a] = fCandidates[fNoOfCandidates];
 //                    route.calcTourLength();
 //                    System.out.println("tourLength : " + route.getfTourLength());
-                    jumpTo2 = true;
-                }
+                        jumpTo2 = true;
+                    }
 
-            } //end while(i < 2)
-            //System.out.println("H size : " + cityListH.size());
-        } // while (cityListH.size() > 0)
+                } //end while(i < 2)
+                //System.out.println("H size : " + cityListH.size());
+            } // while (cityListH.size() > 0)
 
-        long end = System.currentTimeMillis(); //時間計測
-        System.out.println();
-        System.out.println((end - start)/1000.0 + "s");
+            long end = System.currentTimeMillis(); //時間計測
+            System.out.println();
+            System.out.println((end - start) / 1000.0 + "s");
 
-        route.calcTourLength();
-        System.out.println("final tourLength : " + route.getfTourLength());
+            route.calcTourLength();
+            System.out.println("final tourLength : " + route.getfTourLength());
+
+            time[count] = (end - start);
+        }
+
+        long aveTime = 0;
+        for(int count = 1; count < 11; count++){
+            aveTime += time[count];
+        }
+
+        aveTime = aveTime / 10;
+        System.out.println("aveTIme = " + aveTime / 1000.0 + "s");
+
 
     }//end 2-Opt main
 
