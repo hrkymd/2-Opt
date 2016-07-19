@@ -7,23 +7,28 @@ import java.util.Random;
  */
 public class T2Opt {
 
+    //データログを出力するかどうか
+    private static final boolean DATA_LOGING = false;
+    //データログを出力する試行数
+    private static final int LOG_STEP = 5000;
+
     public static void main(String[] args) throws Exception{
 
-//        String fileName = "src/ca4663.tsp";
-//        String kNearlestFileName = "kNearlestListOfca4663.csv";
-//        String reverseListFileName = "reverseListOfca4663.csv";
-//        String dataName = "ca4663";
-//
+        String fileName = "src/ca4663.tsp";
+        String kNearlestFileName = "kNearlestListOfca4663.csv";
+        String reverseListFileName = "reverseListOfca4663.csv";
+        String dataName = "ca4663";
+
 //        String fileName = "src/ja9847.tsp";
 //        String kNearlestFileName = "kNearlestListOfja9847.csv";
 //        String reverseListFileName = "reverseListOfja9847.csv";
 //        String dataName = "ja9847";
-//
+
 //        String fileName = "src/fi10639.tsp";
 //        String kNearlestFileName = "kNearlestListOffi10639.csv";
 //        String reverseListFileName = "reverseListOffi10639.csv";
 //        String dataName = "fi10639";
-//
+
 //        String fileName = "src/bm33708.tsp";
 //        String kNearlestFileName = "kNearlestListOfbm33708.csv";
 //        String reverseListFileName = "reverseListOfbm33708.csv";
@@ -33,11 +38,11 @@ public class T2Opt {
 //        String kNearlestFileName = "kNearlestListOfch71009.csv";
 //        String reverseListFileName = "reverseListOfch71009.csv";
 //        String dataName = "ch71009";
-
-        String fileName = "src/mona-lisa100K.tsp";
-        String kNearlestFileName = "kNearlestListOfmonalisa.csv";
-        String reverseListFileName = "reverseListOfmonalisa.csv";
-        String dataName = "monalisa";
+//
+//        String fileName = "src/mona-lisa100K.tsp";
+//        String kNearlestFileName = "kNearlestListOfmonalisa.csv";
+//        String reverseListFileName = "reverseListOfmonalisa.csv";
+//        String dataName = "mona-lisa100K";
 //
         TInstance cityData; //都市データ
         int[][] kNearlestList; //k近傍リスト
@@ -178,8 +183,6 @@ public class T2Opt {
             int v_a, v_b, v_c, v_d;
             int i;
             boolean jumpTo2;
-            //int count = 0;
-
             long start = System.currentTimeMillis(); //時間計測
 
             while (fNoOfCandidates > 0) { //ステップ2
@@ -242,58 +245,33 @@ public class T2Opt {
 
                             if (sizeOfAList <= sizeOfBList && sizeOfAList <= sizeOfCList && sizeOfAList <= sizeOfDList) {
                                 for (int l = 0; l < sizeOfAList; l++) {
-                                    if (reverseList[v_b].contains(reverseList[v_a].get(l))) {
-                                        if (reverseList[v_c].contains(reverseList[v_a].get(l))) {
-                                            if (reverseList[v_d].contains(reverseList[v_a].get(l))) {
-                                                if (!fIsCandidate[l]) {
-                                                    fIsCandidate[l] = true;
-                                                    fCandidates[fNoOfCandidates++] = l;
-                                                }
-                                            }
-                                        }
+                                    if (reverseList[v_b].contains(reverseList[v_a].get(l)) && reverseList[v_c].contains(reverseList[v_a].get(l)) && reverseList[v_d].contains(reverseList[v_a].get(l)) && !fIsCandidate[l]) {
+                                        fIsCandidate[l] = true;
+                                        fCandidates[fNoOfCandidates++] = l;
                                     }
                                 }
                             } else if (sizeOfBList <= sizeOfAList && sizeOfBList <= sizeOfCList && sizeOfBList <= sizeOfDList) {
                                 for (int l = 0; l < sizeOfBList; l++) {
-                                    if (reverseList[v_a].contains(reverseList[v_b].get(l))) {
-                                        if (reverseList[v_c].contains(reverseList[v_b].get(l))) {
-                                            if (reverseList[v_d].contains(reverseList[v_b].get(l))) {
-                                                if (!fIsCandidate[l]) {
-                                                    fIsCandidate[l] = true;
-                                                    fCandidates[fNoOfCandidates++] = l;
-                                                }
-                                            }
-                                        }
+                                    if (reverseList[v_a].contains(reverseList[v_b].get(l)) && reverseList[v_c].contains(reverseList[v_b].get(l)) && reverseList[v_d].contains(reverseList[v_b].get(l)) && !fIsCandidate[l]) {
+                                        fIsCandidate[l] = true;
+                                        fCandidates[fNoOfCandidates++] = l;
                                     }
                                 }
                             } else if (sizeOfCList <= sizeOfAList && sizeOfCList <= sizeOfBList && sizeOfCList <= sizeOfDList) {
                                 for (int l = 0; l < sizeOfCList; l++) {
-                                    if (reverseList[v_a].contains(reverseList[v_c].get(l))) {
-                                        if (reverseList[v_b].contains(reverseList[v_c].get(l))) {
-                                            if (reverseList[v_d].contains(reverseList[v_c].get(l))) {
-                                                if (!fIsCandidate[l]) {
-                                                    fIsCandidate[l] = true;
-                                                    fCandidates[fNoOfCandidates++] = l;
-                                                }
-                                            }
-                                        }
+                                    if (reverseList[v_a].contains(reverseList[v_c].get(l)) && reverseList[v_b].contains(reverseList[v_c].get(l)) && reverseList[v_d].contains(reverseList[v_c].get(l)) && !fIsCandidate[l]) {
+                                        fIsCandidate[l] = true;
+                                        fCandidates[fNoOfCandidates++] = l;
                                     }
                                 }
                             } else {
                                 for (int l = 0; l < sizeOfDList; l++) {
-                                    if (reverseList[v_a].contains(reverseList[v_d].get(l))) {
-                                        if (reverseList[v_b].contains(reverseList[v_d].get(l))) {
-                                            if (reverseList[v_c].contains(reverseList[v_d].get(l))) {
-                                                if (!fIsCandidate[l]) {
-                                                    fIsCandidate[l] = true;
-                                                    fCandidates[fNoOfCandidates++] = l;
-                                                }
-                                            }
-                                        }
+                                    if (reverseList[v_a].contains(reverseList[v_d].get(l)) && reverseList[v_b].contains(reverseList[v_d].get(l)) && reverseList[v_c].contains(reverseList[v_d].get(l)) && !fIsCandidate[l]) {
+                                        fIsCandidate[l] = true;
+                                        fCandidates[fNoOfCandidates++] = l;
                                     }
                                 }
                             }
-
                             jumpTo2 = true;
                             break;
 
@@ -320,13 +298,17 @@ public class T2Opt {
             } // while (cityListH.size() > 0)
 
             long end = System.currentTimeMillis(); //時間計測
-            System.out.println();
             System.out.println((end - start) / 1000.0 + "s");
 
+//            pw.println(route.tourToString());
             route.calcTourLength();
             System.out.println("final tourLength : " + route.getfTourLength());
+            System.out.println();
 
-            time[count] = (end - start);
+//            pw.println(route.tourToString());
+
+//            pw.close();
+        time[count] = (end - start);
         }
 
         long aveTime = 0;

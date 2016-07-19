@@ -227,184 +227,23 @@ public class TRoute {
             if(positionV_a < positionV_b){
                 p1 = positionV_c;
                 p2 = positionV_b;
-
-//                difference = positionV_c - positionV_b;
-//                if(difference % 2 == 0){
-//                    loopNum = difference / 2;
-//                }
-//                else{
-//                    loopNum = difference / 2 + 1;
-//                }
-//
-//                for(int i = 0; i < loopNum; i++){
-//
-//                    if(positionV_c - i < 0){
-//                        swapPosi2 = positionV_c - i + fCityNum;
-//                    }
-//                    else{
-//                        swapPosi2 = positionV_c - i;
-//                    }
-//
-//                    if(positionV_b + i >= fCityNum){
-//                        swapPosi1 = (positionV_b + i) - fCityNum;
-//                    }
-//                    else{
-//                        swapPosi1 = positionV_b + i;
-//                    }
-//
-//                    swapId1 = fRouteList[swapPosi1];
-//                    swapId2 = fRouteList[swapPosi2];
-//
-//                    //経路の交換
-//                    tmpRoute = swapId1;
-//                    fRouteList[swapPosi1] = swapId2;
-//                    fRouteList[swapPosi2] = tmpRoute;
-//
-//                    //Idから経路出す方の交換
-//                    tmpId = fIdToRoute[swapId1];
-//                    fIdToRoute[swapId1] = fIdToRoute[swapId2];
-//                    fIdToRoute[swapId2] = tmpId;
-//                } //end for(i)
             }
             //pvb,pva,   , pvd,pvcとなるパターン
             else {
-
                 p1 = positionV_d;
                 p2 = positionV_a;
-
-
-//                difference = positionV_d - positionV_a;
-//
-//                if(difference % 2 == 0){
-//                    loopNum = difference / 2;
-//                }
-//                else{
-//                    loopNum = difference / 2 + 1;
-//                }
-//
-//
-//                for(int i = 0; i < loopNum; i++){
-//
-//                    if(positionV_d - i < 0){
-//                        swapPosi2 = positionV_d - i + fCityNum;
-//                    }
-//                    else{
-//                        swapPosi2 = positionV_d - i;
-//                    }
-//
-//                    if(positionV_a + i >= fCityNum){
-//                        swapPosi1 = (positionV_a + i) - fCityNum;
-//                    }
-//                    else{
-//                        swapPosi1 = positionV_a + i;
-//                    }
-//
-//                    swapId1 = fRouteList[swapPosi1];
-//                    swapId2 = fRouteList[swapPosi2];
-//
-//                    //経路の交換
-//                    tmpRoute = swapId1;
-//                    fRouteList[swapPosi1] = swapId2;
-//                    fRouteList[swapPosi2] = tmpRoute;
-//
-//                    //Idから経路出す方の交換
-//                    tmpId = fIdToRoute[swapId1];
-//                    fIdToRoute[swapId1] = fIdToRoute[swapId2];
-//                    fIdToRoute[swapId2] = tmpId;
-//                } //end for(i)
             }
         }
         else {
             //pvc,pvd,   , pva,pvbとなるパターン
             if(positionV_c < positionV_d){
-
                 p1 = positionV_a;
                 p2 = positionV_d;
-
-//                difference = positionV_a - positionV_d;
-//                if(difference % 2 == 0){
-//                    loopNum = difference / 2;
-//                }
-//                else{
-//                    loopNum = difference / 2 + 1;
-//                }
-//
-//
-//                for(int i = 0; i < loopNum; i++){
-//
-//                    if(positionV_a - i < 0){
-//                        swapPosi2 = positionV_a - i + fCityNum;
-//                    }
-//                    else{
-//                        swapPosi2 = positionV_a - i;
-//                    }
-//
-//                    if(positionV_d + i >= fCityNum){
-//                        swapPosi1 = (positionV_d + i) - fCityNum;
-//                    }
-//                    else{
-//                        swapPosi1 = positionV_d + i;
-//                    }
-//
-//                    swapId1 = fRouteList[swapPosi1];
-//                    swapId2 = fRouteList[swapPosi2];
-//
-//                    //経路の交換
-//                    tmpRoute = swapId1;
-//                    fRouteList[swapPosi1] = swapId2;
-//                    fRouteList[swapPosi2] = tmpRoute;
-//
-//                    //Idから経路出す方の交換
-//                    tmpId = fIdToRoute[swapId1];
-//                    fIdToRoute[swapId1] = fIdToRoute[swapId2];
-//                    fIdToRoute[swapId2] = tmpId;
-//                } //end for(i)
             }
             //pvd,pvc,   , pvb,pvaとなるパターン
             else {
-
                 p1 = positionV_b;
                 p2 = positionV_c;
-
-//                difference = positionV_b - positionV_c;
-//
-//                if(difference % 2 == 0){
-//                    loopNum = difference / 2;
-//                }
-//                else{
-//                    loopNum = difference / 2 + 1;
-//                }
-//
-//
-//                for(int i = 0; i < loopNum; i++){
-//
-//                    if(positionV_b - i < 0){
-//                        swapPosi2 = positionV_b - i + fCityNum;
-//                    }
-//                    else{
-//                        swapPosi2 = positionV_b - i;
-//                    }
-//
-//                    if(positionV_c + i >= fCityNum){
-//                        swapPosi1 = (positionV_c + i) - fCityNum;
-//                    }
-//                    else{
-//                        swapPosi1 = positionV_c + i;
-//                    }
-//
-//                    swapId1 = fRouteList[swapPosi1];
-//                    swapId2 = fRouteList[swapPosi2];
-//
-//                    //経路の交換
-//                    tmpRoute = swapId1;
-//                    fRouteList[swapPosi1] = swapId2;
-//                    fRouteList[swapPosi2] = tmpRoute;
-//
-//                    //Idから経路出す方の交換
-//                    tmpId = fIdToRoute[swapId1];
-//                    fIdToRoute[swapId1] = fIdToRoute[swapId2];
-//                    fIdToRoute[swapId2] = tmpId;
-//                } //end for(i)
             }
         }
 
@@ -489,7 +328,23 @@ public class TRoute {
                 fIdToRoute[swapId2] = tmpId;
             } //end for(i)
         }
-
     } //end swapEdge
+
+    /**
+     * 経路の配列を返す
+     * @return
+     */
+    public String tourToString(){
+        String str = "";
+        for(int i = 0; i < fCityNum; i++){
+            //str += fRouteList[i] + "," + fCityData.getCity(fRouteList[i]).getFx() + "," + fCityData.getCity(fRouteList[i]).getFy() + "\n";
+            if(i < fCityNum - 1) {
+                str += fRouteList[i] + " ";
+            }else {
+                str += fRouteList[i];
+            }
+        }
+        return str;
+    }
 
 }
